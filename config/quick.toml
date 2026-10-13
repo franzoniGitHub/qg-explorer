@@ -1,0 +1,63 @@
+# A small, fast configuration (a couple of minutes) to try the whole workflow.
+# Same physics as default.toml; shorter runs, fewer members, fewer cases.
+
+title = "Quick test run, two-layer QG"
+description = "Short control run and tiny experiments - for trying the workflow, not for science."
+
+[model]
+nx = 64
+ny = 64
+Lx = 1.6e7
+Ly = 1.6e7
+f0 = 1.0e-4
+beta = 1.6e-11
+Ld = 6.0e5
+delta = 0.5
+U1 = 20.5
+U2 = 5.0
+r_ek_days = 3.0
+dt = 1200.0
+filter_tau_hours = 6.0
+
+[control]
+seed = 1
+spinup_days = 120
+length_days = 90
+output_hours = 12
+
+[sweep]
+enabled = true
+spinup_days = 40
+length_days = 30
+output_hours = 24
+
+[[sweep.axis]]
+parameter = "shear_ratio"
+values = [0.8, 1.35, 2.0]
+
+[ensemble]
+enabled = true
+start_day = 20
+members = 8
+lead_days = 12
+output_hours = 12
+stamps = 4
+
+[[ensemble.group]]
+name = "5 m, 2000 km"
+amp_z = 5.0
+wavelength_km = 2000
+
+[assimilation]
+enabled = true
+start_day = 30
+days = 20
+cycle_hours = 12
+members = 10
+spinup_cycles = 10
+obs_error_z = 10.0
+variables = ["psi1", "psi2"]
+inflation = 1.1
+localization_km = 3000
+stations = [50, 100]
+primary = 100

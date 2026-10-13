@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+node_modules/
+# restart files and caches of the pipeline; the published datasets themselves are kept
+docs/data/.work-*/
+.work-*/
+shots/

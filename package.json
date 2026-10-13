@@ -1,0 +1,10 @@
+{
+  "name": "qg-explorer",
+  "private": true,
+  "type": "module",
+  "description": "Two-layer QG model and an interactive web explorer for its output",
+  "scripts": {
+    "test:js": "node --test tests/js/core.test.js tests/js/physics.test.js"
+  },
+  "license": "MIT"
+}

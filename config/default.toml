@@ -1,0 +1,81 @@
+# Default configuration: an idealised mid-latitude storm track.
+# Every key under [model] is a field of qg2l.Params (SI units) except three
+# convenience keys: r_ek_days, filter_tau_hours and shear_ratio.
+
+title = "Idealised storm track, two-layer QG"
+description = """Doubly periodic beta-plane, two equal layers, imposed shear 1.35 times the critical value.
+Control run, parameter sweeps, twin ensemble forecasts and an observing-system experiment."""
+
+[model]
+nx = 64
+ny = 64
+Lx = 1.6e7            # m   (16 000 km)
+Ly = 1.6e7
+f0 = 1.0e-4           # s^-1
+beta = 1.6e-11        # m^-1 s^-1  (about 45 degrees N)
+Ld = 6.0e5            # m   internal deformation radius
+delta = 0.5           # H1/(H1+H2)
+U1 = 20.5             # m/s upper-layer mean wind   -> shear 15.5 m/s = 1.35 x critical
+U2 = 5.0              # m/s lower-layer mean wind
+r_ek_days = 3.0       # lower-layer Ekman spin-down time (days)
+dt = 1200.0           # s
+filter_tau_hours = 6.0
+
+[control]
+seed = 1
+spinup_days = 300
+length_days = 360
+output_hours = 12
+
+[sweep]
+enabled = true
+spinup_days = 150
+length_days = 150
+output_hours = 24
+
+[[sweep.axis]]
+parameter = "shear_ratio"                 # (U1-U2) / critical shear, with U2 fixed
+values = [0.8, 1.0, 1.15, 1.35, 1.6, 2.0, 2.5]
+
+[[sweep.axis]]
+parameter = "r_ek_days"                   # lower-layer drag, as spin-down time in days
+values = [1.0, 2.0, 3.0, 5.0, 10.0, 20.0]
+
+[ensemble]
+enabled = true
+start_day = 60            # day of the control run used as the initial truth
+members = 20
+lead_days = 30
+output_hours = 12
+seed = 3
+stamps = 6                # members whose fields are stored for the postage-stamp maps
+
+[[ensemble.group]]
+name = "5 m, 2000 km"
+amp_z = 5.0               # std of the initial error, in geopotential-height units (m)
+wavelength_km = 2000
+
+[[ensemble.group]]
+name = "0.5 m, 2000 km"
+amp_z = 0.5
+wavelength_km = 2000
+
+[[ensemble.group]]
+name = "5 m, 6000 km"
+amp_z = 5.0
+wavelength_km = 6000
+
+[assimilation]
+enabled = true
+start_day = 120
+days = 60
+cycle_hours = 12
+members = 20
+spinup_cycles = 20        # cycles ignored in the summary scores
+obs_error_z = 10.0        # m, geopotential-height equivalent
+variables = ["psi1", "psi2"]
+inflation = 1.1
+localization_km = 3000
+stations = [25, 50, 100, 200]
+primary = 100
+seed = 4

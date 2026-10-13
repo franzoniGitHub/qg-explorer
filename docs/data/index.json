@@ -1,0 +1,12 @@
+{
+ "datasets": [
+  {
+   "id": "default",
+   "path": "default/",
+   "title": "Idealised storm track, two-layer QG",
+   "description": "Doubly periodic beta-plane, two equal layers, imposed shear 1.35 times the critical value.\nControl run, parameter sweeps, twin ensemble forecasts and an observing-system experiment.",
+   "created": "2026-10-05T10:57:57Z",
+   "size_mb": 16.6
+  }
+ ]
+}

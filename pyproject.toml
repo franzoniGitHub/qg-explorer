@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qg2l"
+version = "1.0.0"
+description = "Two-layer quasi-geostrophic channel model and the data pipeline for the QG explorer website"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24"]
+license = { text = "MIT" }
+
+[project.optional-dependencies]
+fast = ["scipy>=1.10"]
+test = ["pytest>=7"]
+
+[project.scripts]
+qg2l = "qg2l.cli:main"
+
+[tool.setuptools]
+packages = ["qg2l"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--ignore=tests/js --ignore=tests/browser"
